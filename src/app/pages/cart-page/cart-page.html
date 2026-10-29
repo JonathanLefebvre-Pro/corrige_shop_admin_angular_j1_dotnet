@@ -13,16 +13,19 @@
     <td>Prix</td>
     <td>Quantité</td>
     <td>Sous-total HTVA</td>
+    <td>Actions</td>
   </thead>
   <tbody>
     @for (item of cart(); track $index) {
       <tr>
-         <app-cart-items [ligneItemCart]="item"/>
+         <app-cart-items [ligneItemCart]="item" (onRemoveItem)="handleRemoveItem($event)"/>
       </tr>
     }
   </tbody>
 </table>
 <br>
+
+<button (click)="handleClearCart($event)">Clear cart</button>
 
 <article>
   <h2>Bilan panier</h2>

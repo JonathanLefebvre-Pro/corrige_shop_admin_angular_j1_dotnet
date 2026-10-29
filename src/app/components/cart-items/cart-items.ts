@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Product } from '../../models/product';
 import { cartItemModel } from './cart-item.model';
 
@@ -13,7 +13,14 @@ export class CartItems {
   //ligneItem = input.required<{product : Product, quantity : number}>()
 
   //utiliser une interface qui peut être importer par tout autre composant que cartItem
-  ligneItemCart = input.required<cartItemModel>();
+  public ligneItemCart = input.required<cartItemModel>();
+
+  public onRemoveItem = output<number>();
 
 
+  protected onRemoveBtnClicked(event: Event) {
+    event.preventDefault();
+
+    this.onRemoveItem.emit(this.ligneItemCart().product.id);
+  }
 }

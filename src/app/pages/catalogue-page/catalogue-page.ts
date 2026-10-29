@@ -1,10 +1,8 @@
 import { Component, computed, inject, linkedSignal, signal, WritableSignal } from '@angular/core';
 import { Product, PRODUCTS } from '../../models/product';
 import { ProductCard } from '../../components/product-card/product-card';
-import { cartItemModel } from '../../components/cart-items/cart-item.model';
-import { CartItems } from '../../components/cart-items/cart-items';
-import { CurrencyPipe } from '@angular/common';
 import { PanierService } from '../../services/panier.service';
+
 @Component({
   selector: 'app-catalogue-page',
   imports: [ProductCard],
@@ -14,19 +12,19 @@ import { PanierService } from '../../services/panier.service';
 
 export class CataloguePage {
 
-  panierService = inject(PanierService)
+  protected readonly panierService = inject(PanierService)
   // le stock est recalculé à partir du panier du service => il survit au changement de page
   // stock affiché = stock de base - quantité déjà dans le panier
-  products = computed<Product[]>(() => PRODUCTS.map(product => {
+  protected products = computed<Product[]>(() => PRODUCTS.map(product => {
     const quantiteDansPanier = this.panierService.cartItems()
       .find(ct => ct.product.id === product.id)?.quantity ?? 0;
     return {...product, stock: product.stock - quantiteDansPanier};
   }))
-  cartCount = signal(0);
-  categories = signal<string[]>(["Informatique", "Audio"])
+  protected readonly cartCount = signal(0);
+  protected readonly categories = signal<string[]>(["Informatique", "Audio"])
 
 
-  addToCart(event : {product: Product; quantity: number}) {
+  protected addToCart(event : {product: Product; quantity: number}) {
     this.panierService.ajouter(event)
 
     this.cartCount.update((c) => c + event.quantity);
@@ -37,18 +35,17 @@ export class CataloguePage {
   // if dans le
 
   // Je crée une liste de produit avec seulement la catégorie Audio
-  nbrAudio = computed(() => this.products().filter(product => product.category === 'Audio'))
+  protected nbrAudio = computed(() => this.products().filter(product => product.category === 'Audio'))
 
   // Je crée jne liste de produit avec seulement la catégorie Inforatique
-  nbrInformatique = computed(() => this.products().filter(product => product.category === 'Informatique'))
+  protected nbrInformatique = computed(() => this.products().filter(product => product.category === 'Informatique'))
 
   // mon linked signal calcule quelle tableau de produit est le plus grand
   // SI AUDIO est plus grand que informatique notre selected va s'initialsier a 'Audio'
   // SI Audio est plus petit que informatique notre select va s'initialiser a 'Informatique'
-  selected : WritableSignal<string> = linkedSignal(() => this.nbrAudio().length > this.nbrInformatique().length ? 'Audio' : 'Informatique');
+  protected selected : WritableSignal<string> = linkedSignal(() => this.nbrAudio().length > this.nbrInformatique().length ? 'Audio' : 'Informatique');
 
-  choisi(categoryChoice : string) : void {
+  protected choisi(categoryChoice : string) : void {
     this.selected.set(categoryChoice);
-
-}
+  }
 }
