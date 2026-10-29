@@ -1,8 +1,9 @@
+import { IPanierService } from '@/app/appCore/interfaces/ipanier.service';
 import { Service, signal } from '@angular/core';
 import { cartItemModel } from '@presentation/components/cart-items/cart-item.model';
 
 @Service()
-export class PanierService {
+export class PanierService implements IPanierService {
 
   private readonly _cartItems = signal<cartItemModel[]>([])
   public readonly cartItems = this._cartItems.asReadonly()

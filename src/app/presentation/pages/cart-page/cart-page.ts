@@ -1,7 +1,7 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { CartItems } from '../../components/cart-items/cart-items';
-import { PanierService } from '../../../appCore/services/panier.service';
+import { Component, computed, inject } from '@angular/core';
+import { PanierService } from '@infrastructure/services/panier.service';
 import { CurrencyPipe } from '@angular/common';
+import { CartItems } from '@presentation/components/cart-items/cart-items';
 
 @Component({
   imports: [CartItems, CurrencyPipe],

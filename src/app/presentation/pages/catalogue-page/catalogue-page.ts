@@ -1,8 +1,8 @@
 import { Component, computed, inject, linkedSignal, signal, WritableSignal } from '@angular/core';
-import { ProductCard } from '../../components/product-card/product-card';
-import { PanierService } from '../../../appCore/services/panier.service';
-import { ProductService } from '../../../appCore/services/product.service';
-import { Product } from '../../../domain/product';
+import { ProductCard } from '@presentation/components/product-card/product-card';
+import { Product } from '@domain/product';
+import { ProductService } from '@infrastructure/services/product.service';
+import { PanierService } from '@infrastructure/services/panier.service';
 
 @Component({
   selector: 'app-catalogue-page',
