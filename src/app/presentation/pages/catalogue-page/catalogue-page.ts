@@ -2,7 +2,7 @@ import { Component, computed, inject, linkedSignal, signal, WritableSignal } fro
 import { ProductCard } from '@presentation/components/product-card/product-card';
 import { Product } from '@domain/product';
 import { ProductService } from '@infrastructure/services/product.service';
-import { PanierService } from '@infrastructure/services/panier.service';
+import { CartService } from '@infrastructure/services/panier.service';
 
 @Component({
   selector: 'app-catalogue-page',
@@ -14,12 +14,12 @@ import { PanierService } from '@infrastructure/services/panier.service';
 export class CataloguePage {
 
   protected readonly productService = inject(ProductService);
-  protected readonly panierService = inject(PanierService)
+  protected readonly cartService = inject(CartService)
 
   // le stock est recalculé à partir du panier du service => il survit au changement de page
   // stock affiché = stock de base - quantité déjà dans le panier
   protected products = computed<Product[]>(() => this.productService.getProducts().map(product => {
-    const quantiteDansPanier = this.panierService.cartItems()
+    const quantiteDansPanier = this.cartService.cartItems()
       .find(ct => ct.product.id === product.id)?.quantity ?? 0;
     return {...product, stock: product.stock - quantiteDansPanier};
   }))
@@ -29,7 +29,7 @@ export class CataloguePage {
 
 
   protected addToCart(event : {product: Product; quantity: number}) {
-    this.panierService.ajouter(event)
+    this.cartService.addItem(event)
 
     this.cartCount.update((c) => c + event.quantity);
   }

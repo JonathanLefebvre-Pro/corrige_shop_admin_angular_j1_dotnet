@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { CartService } from '@/app/infrastructure/services/panier.service';
+import { Component, computed, inject } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -7,5 +8,12 @@ import { Component } from '@angular/core';
   styleUrl: './header.scss',
 })
 export class Header {
-  title = 'ShopAdmin';
+  protected title = 'ShopAdmin';
+
+  protected readonly cartService = inject(CartService);
+
+  protected totalItems = computed(() => this.cartService.cartItems.length);
+  protected totalItemsByQuantity = computed(() => 
+    this.cartService.cartItems()
+    .reduce((prev, current) => prev + current.quantity, 0))
 }

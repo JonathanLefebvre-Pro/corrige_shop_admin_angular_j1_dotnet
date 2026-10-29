@@ -1,14 +1,14 @@
-import { IPanierService } from '@/app/appCore/interfaces/ipanier.service';
+import { IPanierService as ICartService } from '@/app/appCore/interfaces/ipanier.service';
 import { Service, signal } from '@angular/core';
 import { cartItemModel } from '@presentation/components/cart-items/cart-item.model';
 
 @Service()
-export class PanierService implements IPanierService {
+export class CartService implements ICartService {
 
   private readonly _cartItems = signal<cartItemModel[]>([])
   public readonly cartItems = this._cartItems.asReadonly()
 
-  public ajouter(cartItem : cartItemModel) {
+  public addItem(cartItem : cartItemModel) {
     if(this.IsAlreadyInCart(cartItem) ) {
       this._cartItems.update((list) => list.map((ct) =>
       ct.product.id === cartItem.product.id
@@ -20,7 +20,7 @@ export class PanierService implements IPanierService {
     this._cartItems.update((list) => [...list, cartItem])
   }
 
-  public remove(itemId: number) {
+  public removeItem(itemId: number) {
     console.debug("Remove item : " + itemId);
     this._cartItems.update((list) => list.filter(i => i.product.id !== itemId));
   }
