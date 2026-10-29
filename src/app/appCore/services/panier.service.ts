@@ -1,5 +1,5 @@
 import { Service, signal } from '@angular/core';
-import { cartItemModel } from '../components/cart-items/cart-item.model';
+import { cartItemModel } from '@presentation/components/cart-items/cart-item.model';
 
 @Service()
 export class PanierService {

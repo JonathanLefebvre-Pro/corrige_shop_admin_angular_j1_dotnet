@@ -5,16 +5,16 @@ export const routes: Routes = [
   {
     path: 'catalogue',
     loadComponent: () =>
-      import('./pages/catalogue-page/catalogue-page').then((m) => m.CataloguePage),
+      import('@presentation/pages/catalogue-page/catalogue-page').then((m) => m.CataloguePage),
   },
   {
     path: 'panier',
     loadComponent: () =>
-      import('./pages/cart-page/cart-page').then((m) => m.CartPage),
+      import('@presentation/pages/cart-page/cart-page').then((m) => m.CartPage),
   },
   {
     path: 'clients',
     loadComponent: () =>
-      import('./pages/customers-page/customers-page').then((m) => m.CustomersPage),
+      import('@presentation/pages/customers-page/customers-page').then((m) => m.CustomersPage),
   },
 ];

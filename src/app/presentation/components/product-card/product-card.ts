@@ -1,10 +1,10 @@
 import { Component, input, output, signal } from '@angular/core';
 import { CurrencyPipe, TitleCasePipe } from '@angular/common';
-import { StockLabelPipe } from '../../pipes/stock-label-pipe';
 import { FormsModule } from '@angular/forms';
 import { LowStock } from '../../Directives/low-stock';
 import { QuantityPicker } from '../quantity-picker/quantity-picker';
-import { Product } from '../../domain/product';
+import { StockLabelPipe } from '@/app/appCore/pipes/stock-label-pipe';
+import { Product } from '@/app/domain/product';
 
 /* export interface productLine {
   product : Product,

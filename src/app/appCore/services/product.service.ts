@@ -1,6 +1,6 @@
 import { Service, signal } from "@angular/core";
-import { PRODUCTS } from "../models/product-mock";
-import { Product } from "../domain/product";
+import { PRODUCTS } from "../../infrastructure/product-mock";
+import { Product } from "../../domain/product";
 
 @Service()
 export class ProductService {
