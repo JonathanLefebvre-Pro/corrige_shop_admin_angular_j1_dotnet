@@ -1,11 +1,4 @@
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-  stock: number;
-  category: string;
-  imageUrl: string;
-}
+import { Product } from "../domain/product";
 
 export const PRODUCTS: readonly Product[] = [
   // ===== INFORMATIQUE (5) =====

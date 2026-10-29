@@ -1,7 +1,8 @@
 import { Component, computed, inject, linkedSignal, signal, WritableSignal } from '@angular/core';
-import { Product, PRODUCTS } from '../../models/product';
 import { ProductCard } from '../../components/product-card/product-card';
 import { PanierService } from '../../services/panier.service';
+import { ProductService } from '../../services/product.service';
+import { Product } from '../../domain/product';
 
 @Component({
   selector: 'app-catalogue-page',
@@ -12,14 +13,17 @@ import { PanierService } from '../../services/panier.service';
 
 export class CataloguePage {
 
+  protected readonly productService = inject(ProductService);
   protected readonly panierService = inject(PanierService)
+
   // le stock est recalculé à partir du panier du service => il survit au changement de page
   // stock affiché = stock de base - quantité déjà dans le panier
-  protected products = computed<Product[]>(() => PRODUCTS.map(product => {
+  protected products = computed<Product[]>(() => this.productService.getProducts().map(product => {
     const quantiteDansPanier = this.panierService.cartItems()
       .find(ct => ct.product.id === product.id)?.quantity ?? 0;
     return {...product, stock: product.stock - quantiteDansPanier};
   }))
+
   protected readonly cartCount = signal(0);
   protected readonly categories = signal<string[]>(["Informatique", "Audio"])
 
