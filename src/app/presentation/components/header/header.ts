@@ -12,7 +12,8 @@ export class Header {
 
   protected readonly cartService = inject(CartService);
 
-  protected totalItems = computed(() => this.cartService.cartItems.length);
+  protected totalItems = computed(() => this.cartService.cartItems()
+  .reduce((prev, current) => prev + 1, 0));
   protected totalItemsByQuantity = computed(() => 
     this.cartService.cartItems()
     .reduce((prev, current) => prev + current.quantity, 0))
